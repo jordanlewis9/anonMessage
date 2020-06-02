@@ -19,8 +19,14 @@ const threadSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    created_on: Date,
-    bumped_on: Date,
+    created_on: {
+      type: Date,
+      default: Date.now(),
+    },
+    bumped_on: {
+      type: Date,
+      default: Date.now(),
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -29,7 +35,7 @@ const threadSchema = new mongoose.Schema(
 );
 
 threadSchema.virtual("replies", {
-  ref: "Reply",
+  ref: "Review",
   foreignField: "thread_id",
   localField: "_id",
 });
