@@ -3,8 +3,9 @@ const Thread = require("./../models/threadModel");
 
 exports.createReply = async (req, res) => {
   try {
+    req.body.created_on = Date.now();
     const thread = await Thread.findByIdAndUpdate(req.body.thread_id, {
-      bumped_on: Date.now(),
+      bumped_on: req.body.created_on,
     });
     if (!thread) {
       return res.status(400).json({

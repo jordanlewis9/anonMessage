@@ -35,7 +35,7 @@ const threadSchema = new mongoose.Schema(
 );
 
 threadSchema.virtual("replies", {
-  ref: "Review",
+  ref: "Reply",
   foreignField: "thread_id",
   localField: "_id",
 });

@@ -23,9 +23,10 @@ exports.createThread = async (req, res) => {
 
 exports.getThread = async (req, res) => {
   try {
-    const thread = await (
-      await Thread.findOne({ board: req.params.board })
-    ).populate({ path: "replies" });
+    const thread = await Thread.findOne({ board: req.params.board }).populate({
+      path: "replies",
+      sort: { created_on: 1 },
+    });
     console.log(thread.replies);
     res.status(200).json({
       status: "success",
