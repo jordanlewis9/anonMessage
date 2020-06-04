@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const threadSchema = new mongoose.Schema(
   {
-    board: {
+    name: {
       type: String,
       required: [true, "A thread must belong to a board"],
     },
@@ -26,6 +26,11 @@ const threadSchema = new mongoose.Schema(
     bumped_on: {
       type: Date,
       default: Date.now(),
+    },
+    board_id: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Board",
+      required: [true, "A thread must belong to a board."],
     },
   },
   {

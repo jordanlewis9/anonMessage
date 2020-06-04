@@ -1,16 +1,22 @@
 const Thread = require("./../models/threadModel");
+const Board = require("./../models/boardModel");
 
 exports.createThread = async (req, res) => {
   try {
+    console.log(req.params.board);
     req.body.board = req.params.board;
-    const isNewThread = await Thread.findOne({ board: req.body.board });
-    if (isNewThread) {
+    console.log(req.body.board);
+    const board = await Board.findOne({ name: req.body.board }).populate({
+      path: "threads",
+    });
+    if (!board) {
       return res.status(400).json({
         status: "fail",
-        message:
-          "There is already a board with that name. Please create a new board and try again.",
+        message: "There is no board with that name. Please try again.",
       });
     }
+    // look into board having same named threads
+    req.body.board_id = board._id;
     const newThread = await Thread.create(req.body);
     res.status(200).json({
       status: "success",
