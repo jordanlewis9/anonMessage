@@ -16,10 +16,13 @@ const boardController = require("./../controllers/boardController");
 module.exports = function (app) {
   app
     .route("/api/threads/:board")
-    .get(threadController.getThread)
+    .get(threadController.getThreads)
     .post(threadController.createThread);
 
-  app.route("/api/replies/:board").post(replyController.createReply);
+  app
+    .route("/api/replies/:board")
+    .get(threadController.getThread)
+    .post(replyController.createReply);
 
   // app.route("/api/board").post(boardController.createBoard);
 

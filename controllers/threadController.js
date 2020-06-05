@@ -3,9 +3,7 @@ const Board = require("./../models/boardModel");
 
 exports.createThread = async (req, res) => {
   try {
-    console.log(req.params.board);
     req.body.board = req.params.board;
-    console.log(req.body.board);
     const board = await Board.findOne({ name: req.body.board }).populate({
       path: "threads",
     });
@@ -38,6 +36,20 @@ exports.getThread = async (req, res) => {
       status: "success",
       thread,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.getThreads = async (req, res) => {
+  try {
+    const threads = await Thread.find({ board: req.params.board })
+      .sort({ bumped_on: -1 })
+      .limit(10)
+      .populate({
+        path: "replies",
+        options: { sort: { created_on: -1 }, limit: 3 },
+      });
   } catch (err) {
     console.log(err);
   }

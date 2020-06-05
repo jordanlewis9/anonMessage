@@ -6,6 +6,10 @@ const threadSchema = new mongoose.Schema(
       type: String,
       required: [true, "A thread must belong to a board"],
     },
+    board: {
+      type: String,
+      required: [true, "A thread must belong to a board"],
+    },
     text: {
       type: String,
       required: [true, "A thread must have text associated with it"],

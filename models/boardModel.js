@@ -17,6 +17,7 @@ boardSchema.virtual("threads", {
   ref: "Thread",
   foreignField: "board_id",
   localField: "_id",
+  options: { sort: { bumped_on: -1 }, limit: 10 },
 });
 
 const Board = mongoose.model("Board", boardSchema);
