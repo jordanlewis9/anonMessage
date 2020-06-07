@@ -27,10 +27,12 @@ exports.createThread = async (req, res) => {
 
 exports.getThread = async (req, res) => {
   try {
-    const thread = await Thread.findOne({ board: req.params.board }).populate({
-      path: "replies",
-      sort: { created_on: 1 },
-    });
+    const thread = await Thread.findOne({ board: req.params.board })
+      .select("-reported")
+      .populate({
+        path: "replies",
+        sort: { created_on: 1 },
+      });
     console.log(thread.replies);
     res.status(200).json({
       status: "success",
@@ -46,10 +48,39 @@ exports.getThreads = async (req, res) => {
     const threads = await Thread.find({ board: req.params.board })
       .sort({ bumped_on: -1 })
       .limit(10)
+      .select("-reported")
       .populate({
         path: "replies",
-        options: { sort: { created_on: -1 }, limit: 3 },
+        options: {
+          sort: { created_on: -1 },
+          limit: 3,
+          select: "-reported",
+        },
       });
+    res.status(200).json({
+      status: "success",
+      threads,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.deleteThread = async (req, res) => {
+  try {
+    const threadToDelete = await Thread.findById(req.body.thread_id).select(
+      "delete_password"
+    );
+    if (req.body.delete_password !== threadToDelete.delete_password) {
+      return res.status(400).json({
+        status: "fail",
+        message: "incorrect password",
+      });
+    }
+    await Thread.findByIdAndDelete(req.body.thread_id);
+    res.status(200).json({
+      status: "success",
+    });
   } catch (err) {
     console.log(err);
   }

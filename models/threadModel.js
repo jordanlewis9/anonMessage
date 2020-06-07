@@ -25,11 +25,11 @@ const threadSchema = new mongoose.Schema(
     },
     created_on: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     bumped_on: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
     board_id: {
       type: mongoose.Schema.ObjectId,
