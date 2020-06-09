@@ -10,7 +10,7 @@ exports.createThread = async (req, res) => {
     if (!board) {
       return res.status(400).json({
         status: "fail",
-        message: "There is no board with that name. Please try again.",
+        message: "Incorrect board given.",
       });
     }
     // look into board having same named threads
@@ -27,13 +27,23 @@ exports.createThread = async (req, res) => {
 
 exports.getThread = async (req, res) => {
   try {
-    const thread = await Thread.findOne({ board: req.params.board })
+    const thread = await Thread.findById(req.query.thread_id)
       .select("-reported")
       .populate({
         path: "replies",
         sort: { created_on: 1 },
       });
-    console.log(thread.replies);
+    if (!thread) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect thread id given.",
+      });
+    } else if (req.params.board !== thread.board) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect board given.",
+      });
+    }
     res.status(200).json({
       status: "success",
       thread,
@@ -78,6 +88,29 @@ exports.deleteThread = async (req, res) => {
       });
     }
     await Thread.findByIdAndDelete(req.body.thread_id);
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.reportThread = async (req, res) => {
+  try {
+    const isCorrectThread = await Thread.findById(req.body.thread_id);
+    if (!isCorrectThread) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect thread id given.",
+      });
+    } else if (req.params.board !== isCorrectThread.board) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect board given.",
+      });
+    }
+    await Thread.findByIdAndUpdate(req.body.thread_id, { reported: true });
     res.status(200).json({
       status: "success",
     });

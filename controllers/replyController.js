@@ -10,8 +10,7 @@ exports.createReply = async (req, res) => {
     if (!thread) {
       return res.status(400).json({
         status: "fail",
-        message:
-          "There is no thread associated with that id. Please try again!",
+        message: "Incorrect thread id given.",
       });
     }
     const newReply = await Reply.create(req.body);
@@ -37,7 +36,7 @@ exports.deleteReply = async (req, res) => {
     } else if (String(thread_id) !== String(replyToDelete.thread_id)) {
       return res.status(400).json({
         status: "fail",
-        message: "Incorrect thread id",
+        message: "Incorrect thread id given.",
       });
     } else if (delete_password !== replyToDelete.delete_password) {
       return res.status(400).json({
@@ -45,7 +44,39 @@ exports.deleteReply = async (req, res) => {
         message: "incorrect password",
       });
     }
-    await Reply.findByIdAndDelete(_id);
+    await Reply.findByIdAndUpdate(_id, { text: "[deleted]" });
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.reportReply = async (req, res) => {
+  try {
+    const isCorrectThread = await Thread.findById(req.body.thread_id);
+    console.log(isCorrectThread);
+    if (!isCorrectThread) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect thread id given.",
+      });
+    } else if (req.params.board !== isCorrectThread.board) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect board sent.",
+      });
+    }
+    const reportedReply = await Reply.findByIdAndUpdate(req.body.reply_id, {
+      reported: true,
+    });
+    if (!reportedReply) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect reply id given.",
+      });
+    }
     res.status(200).json({
       status: "success",
     });

@@ -18,13 +18,15 @@ module.exports = function (app) {
     .route("/api/threads/:board")
     .get(threadController.getThreads)
     .post(threadController.createThread)
-    .delete(threadController.deleteThread);
+    .delete(threadController.deleteThread)
+    .put(threadController.reportThread);
 
   app
     .route("/api/replies/:board")
     .get(threadController.getThread)
     .post(replyController.createReply)
-    .delete(replyController.deleteReply);
+    .delete(replyController.deleteReply)
+    .put(replyController.reportReply);
 
   // app.route("/api/board").post(boardController.createBoard);
 
