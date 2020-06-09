@@ -49,6 +49,12 @@ threadSchema.virtual("replies", {
   localField: "_id",
 });
 
+threadSchema.pre("save", async function (next) {
+  const saltRounds = 14;
+  this.delete_password = await bcrypt.hash(this.delete_password, saltRounds);
+  next();
+});
+
 const Thread = mongoose.model("Thread", threadSchema);
 
 module.exports = Thread;

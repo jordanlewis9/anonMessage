@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const replySchema = new mongoose.Schema({
   thread_id: {
@@ -23,6 +24,12 @@ const replySchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+});
+
+replySchema.pre("save", async function (next) {
+  const saltRounds = 14;
+  this.delete_password = await bcrypt.hash(this.delete_password, saltRounds);
+  next();
 });
 
 const Reply = mongoose.model("Reply", replySchema);

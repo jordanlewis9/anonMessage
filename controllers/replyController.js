@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const Reply = require("./../models/replyModel");
 const Thread = require("./../models/threadModel");
 
@@ -28,6 +29,10 @@ exports.deleteReply = async (req, res) => {
     const { _id, thread_id, delete_password } = req.body;
     const replyToDelete = await Reply.findById(_id).select("+delete_password");
     console.log(req.body.thread_id, replyToDelete.thread_id);
+    const match = await bcrypt.compare(
+      delete_password,
+      replyToDelete.delete_password
+    );
     if (!replyToDelete) {
       return res.status(400).json({
         status: "fail",
@@ -38,10 +43,10 @@ exports.deleteReply = async (req, res) => {
         status: "fail",
         message: "Incorrect thread id given.",
       });
-    } else if (delete_password !== replyToDelete.delete_password) {
+    } else if (!match) {
       return res.status(400).json({
         status: "fail",
-        message: "incorrect password",
+        message: "Incorrect password given.",
       });
     }
     await Reply.findByIdAndUpdate(_id, { text: "[deleted]" });
