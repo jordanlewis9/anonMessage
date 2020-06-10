@@ -6,6 +6,7 @@ var expect = require("chai").expect;
 var cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const helmet = require("helmet");
 
 var apiRoutes = require("./routes/api.js");
 var fccTestingRoutes = require("./routes/fcctesting.js");
@@ -14,6 +15,8 @@ var runner = require("./test-runner");
 dotenv.config({ path: "./.env" });
 
 var app = express();
+
+app.use(helmet());
 
 app.use("/public", express.static(process.cwd() + "/public"));
 

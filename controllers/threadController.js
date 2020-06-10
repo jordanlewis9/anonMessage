@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const Thread = require("./../models/threadModel");
 const Board = require("./../models/boardModel");
 
@@ -16,7 +17,7 @@ exports.createThread = async (req, res) => {
     // look into board having same named threads
     req.body.board_id = board._id;
     const newThread = await Thread.create(req.body);
-    res.status(200).json({
+    res.status(201).json({
       status: "success",
       newThread,
     });
@@ -79,9 +80,24 @@ exports.getThreads = async (req, res) => {
 exports.deleteThread = async (req, res) => {
   try {
     const threadToDelete = await Thread.findById(req.body.thread_id).select(
-      "delete_password"
+      "board delete_password"
     );
-    if (req.body.delete_password !== threadToDelete.delete_password) {
+    if (!threadToDelete) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect thread id given.",
+      });
+    } else if (req.params.board !== threadToDelete.board) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Incorrect board given.",
+      });
+    }
+    const match = await bcrypt.compare(
+      req.body.delete_password,
+      threadToDelete.delete_password
+    );
+    if (!match) {
       return res.status(400).json({
         status: "fail",
         message: "incorrect password",
