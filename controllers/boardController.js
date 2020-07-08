@@ -17,9 +17,17 @@ exports.getBoard = async (req, res) => {
     .sort({ bumped_on: -1 })
     .limit(10)
     .populate({ path: "replies" });
-  console.log(board.threads);
+  console.log(board);
   res.status(200).json({
     status: "success",
     board,
+  });
+};
+
+exports.getBoards = async (req, res) => {
+  const boards = await Board.find();
+  res.status(200).json({
+    status: "success",
+    boards,
   });
 };

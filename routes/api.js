@@ -29,6 +29,6 @@ module.exports = function (app) {
     .put(replyController.reportReply);
 
   // app.route("/api/board").post(boardController.createBoard);
-
+  app.route("/api/boards").get(boardController.getBoards);
   app.route("/api/:board").get(boardController.getBoard);
 };

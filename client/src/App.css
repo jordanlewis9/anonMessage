@@ -1,0 +1,9 @@
+body {
+  box-sizing: border-box;
+}
+
+.header__nav {
+  background-color: blue;
+  display: flex;
+  justify-content: center;
+}

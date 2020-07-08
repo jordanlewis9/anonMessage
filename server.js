@@ -65,7 +65,7 @@ mongoose
   .then(() => {
     console.clear();
     console.log("DB Connected!");
-    app.listen(process.env.PORT || 3000, function () {
+    app.listen(process.env.PORT || 5000, function () {
       console.log("Listening on port " + process.env.PORT);
       if (process.env.NODE_ENV === "test") {
         console.log("Running Tests...");
