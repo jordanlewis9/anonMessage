@@ -14,7 +14,11 @@ const Home = () => {
     <div>
       <ul>
         {boards.map((board) => {
-          return <li key={board.name}>{board.name}</li>;
+          return (
+            <li key={board.name}>
+              <a href={`/b/${board.name}`}>{board.name}</a>
+            </li>
+          );
         })}
       </ul>
     </div>
