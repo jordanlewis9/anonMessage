@@ -3,7 +3,7 @@ body {
 }
 
 .header__nav {
-  background-color: blue;
+  background-color: red;
   display: flex;
   justify-content: center;
 }

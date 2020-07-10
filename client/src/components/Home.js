@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Card from "./Card";
 
 const Home = () => {
   const [boards, setBoards] = useState([]);
@@ -14,11 +15,7 @@ const Home = () => {
     <div>
       <ul>
         {boards.map((board) => {
-          return (
-            <li key={board.name}>
-              <a href={`/b/${board.name}`}>{board.name}</a>
-            </li>
-          );
+          return <Card key={board.name} name={board.name} />;
         })}
       </ul>
     </div>

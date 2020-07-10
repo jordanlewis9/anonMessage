@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Card from "./Card";
 
 const Board = () => {
   let { board } = useParams();
@@ -11,15 +12,21 @@ const Board = () => {
       setThreads(response.data.threads);
     };
     fetchData();
-  }, []);
+  }, [board]);
+  console.log(threads);
   return (
     <div>
       <h2>{board}</h2>
-      <ul>
+      <div>
         {threads.map((thread) => (
-          <li>{thread.name}</li>
+          <Card
+            key={thread.name}
+            name={thread.name}
+            thread_id={thread.id}
+            board={board}
+          />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
