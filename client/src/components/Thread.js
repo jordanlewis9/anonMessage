@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import ReplyCard from "./ReplyCard";
 
@@ -18,11 +18,18 @@ const Thread = () => {
   console.log(thread);
   return (
     <div>
-      <h2>{thread.name}</h2>
+      <Link to={`/b/${board}`}>{board}</Link>
+      <h3>{thread.name}</h3>
       <div>
         {thread.replies
           ? thread.replies.map((reply) => (
-              <ReplyCard key={reply._id} text={reply.text} />
+              <ReplyCard
+                key={reply._id}
+                text={reply.text}
+                replyId={reply._id}
+                threadId={thread_id}
+                boardId={thread.board_id}
+              />
             ))
           : "Loading..."}
       </div>

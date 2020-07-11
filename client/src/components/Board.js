@@ -24,6 +24,7 @@ const Board = () => {
             name={thread.name}
             thread_id={thread.id}
             board={board}
+            replies={thread.replies}
           />
         ))}
       </div>

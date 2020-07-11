@@ -13,6 +13,9 @@ const Card = (props) => {
       >
         {props.name}
       </Link>
+      {props.replies
+        ? props.replies.map((reply) => <div key={reply._id}>{reply.text}</div>)
+        : ""}
     </div>
   );
 };

@@ -3,7 +3,13 @@ body {
 }
 
 .header__nav {
-  background-color: red;
+  background-color: #0000ff;
   display: flex;
   justify-content: center;
+}
+
+.card {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  text-align: center;
 }
