@@ -8,7 +8,7 @@ const ReplyCard = (props) => {
       <DeleteForm
         replyId={props.replyId}
         threadId={props.threadId}
-        boardId={props.boardId}
+        board={props.board}
       />
     </div>
   );

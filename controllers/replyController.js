@@ -28,7 +28,6 @@ exports.deleteReply = async (req, res) => {
   try {
     const { _id, thread_id, delete_password } = req.body;
     const replyToDelete = await Reply.findById(_id).select("+delete_password");
-    console.log(req.body.thread_id, replyToDelete.thread_id);
     const match = await bcrypt.compare(
       delete_password,
       replyToDelete.delete_password

@@ -27,8 +27,8 @@ const Thread = () => {
                 key={reply._id}
                 text={reply.text}
                 replyId={reply._id}
-                threadId={thread_id}
-                boardId={thread.board_id}
+                threadId={thread.id}
+                board={board}
               />
             ))
           : "Loading..."}

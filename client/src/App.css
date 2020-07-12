@@ -13,3 +13,15 @@ body {
   margin-bottom: 10px;
   text-align: center;
 }
+
+.button__delete {
+  box-sizing: content-box;
+  border-radius: 5%;
+  background: rgb(252, 91, 91);
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.input__delete__reply {
+  margin-left: 5px;
+}
