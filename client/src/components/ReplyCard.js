@@ -3,7 +3,7 @@ import DeleteForm from "./DeleteForm";
 
 const ReplyCard = (props) => {
   return (
-    <div>
+    <div className="card__reply">
       <p>{props.text}</p>
       <DeleteForm
         replyId={props.replyId}

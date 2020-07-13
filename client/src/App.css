@@ -25,3 +25,7 @@ body {
 .input__delete__reply {
   margin-left: 5px;
 }
+
+.card__reply {
+  margin-bottom: 20px;
+}

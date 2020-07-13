@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Card from "./Card";
+import NewThread from "./NewThread";
 
 const Board = () => {
   let { board } = useParams();
@@ -28,6 +29,7 @@ const Board = () => {
           />
         ))}
       </div>
+      <NewThread board={board} />
     </div>
   );
 };

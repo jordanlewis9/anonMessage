@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import ReplyCard from "./ReplyCard";
+import NewReply from "./NewReply";
+import DeleteForm from "./DeleteForm";
 
 const Thread = () => {
   const [thread, setThread] = useState({});
@@ -20,6 +22,9 @@ const Thread = () => {
     <div>
       <Link to={`/b/${board}`}>{board}</Link>
       <h3>{thread.name}</h3>
+      <p>{thread.text}</p>
+      <DeleteForm thread={true} threadId={thread.id} board={board} />
+      <NewReply threadId={thread.id} board={board} />
       <div>
         {thread.replies
           ? thread.replies.map((reply) => (
