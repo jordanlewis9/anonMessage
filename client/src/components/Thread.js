@@ -4,6 +4,7 @@ import axios from "axios";
 import ReplyCard from "./ReplyCard";
 import NewReply from "./NewReply";
 import DeleteForm from "./DeleteForm";
+import Report from "./Report";
 
 const Thread = () => {
   const [thread, setThread] = useState({});
@@ -23,6 +24,7 @@ const Thread = () => {
       <Link to={`/b/${board}`}>{board}</Link>
       <h3>{thread.name}</h3>
       <p>{thread.text}</p>
+      <Report thread={true} threadId={thread.id} board={board} />
       <DeleteForm thread={true} threadId={thread.id} board={board} />
       <NewReply threadId={thread.id} board={board} />
       <div>
@@ -34,6 +36,7 @@ const Thread = () => {
                 replyId={reply._id}
                 threadId={thread.id}
                 board={board}
+                reported={reply.reported}
               />
             ))
           : "Loading..."}
