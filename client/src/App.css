@@ -2,10 +2,35 @@ body {
   box-sizing: border-box;
 }
 
+.container {
+  margin: 0 5%;
+}
+
+ul {
+  padding-left: 0;
+}
+
 .header__nav {
-  background-color: #0000ff;
+  background-image: linear-gradient(
+    to right,
+    rgba(242, 129, 0, 1) 0% 12.5%,
+    rgba(255, 106, 0, 1) 12.5% 25%,
+    rgba(212, 207, 207, 1) 25% 37.5%,
+    rgba(0, 0, 255, 1) 37.5% 50%,
+    rgba(255, 0, 0, 1) 50% 62.5%,
+    rgba(114, 47, 55, 1) 62.5% 75%,
+    rgba(25, 72, 138, 1) 75% 87.5%,
+    rgba(255, 215, 0, 1) 87.5%
+  );
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+.header__title {
+  text-decoration: none;
+  color: white;
 }
 
 .card {
@@ -28,4 +53,19 @@ body {
 
 .card__reply {
   margin-bottom: 20px;
+}
+
+.board__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 80vh;
+}
+
+.board__link {
+  text-decoration: underline;
+  color: black;
+  font-weight: 500;
+  font-size: 24px;
 }

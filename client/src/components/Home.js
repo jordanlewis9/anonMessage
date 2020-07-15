@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
   return (
     <div>
-      <ul>
+      <ul className="board__list">
         {boards.map((board) => {
           return <Card key={board.name} name={board.name} />;
         })}

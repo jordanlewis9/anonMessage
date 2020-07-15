@@ -11,9 +11,11 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Header />
-        <Route exact path="/" component={Home} />
-        <Route exact path="/b/:board/:thread_id" component={Thread} />
-        <Route exact path="/b/:board" component={Board} />
+        <div className="container">
+          <Route exact path="/" component={Home} />
+          <Route exact path="/b/:board/:thread_id" component={Thread} />
+          <Route exact path="/b/:board" component={Board} />
+        </div>
       </BrowserRouter>
     </div>
   );

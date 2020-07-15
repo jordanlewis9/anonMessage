@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 
 const Card = (props) => {
   return (
-    <div className="card">
+    <div className={props.board ? "card__thread" : "card__board"}>
       <Link
         to={
           props.board
             ? `/b/${props.board}/${props.thread_id}`
             : `/b/${props.name}`
         }
+        className={props.board ? "thread__link" : "board__link"}
       >
         {props.name}
       </Link>
