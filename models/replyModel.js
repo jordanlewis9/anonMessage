@@ -18,7 +18,7 @@ const replySchema = new mongoose.Schema({
   },
   created_on: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   reported: {
     type: Boolean,

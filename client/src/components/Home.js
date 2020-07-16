@@ -15,7 +15,7 @@ const Home = () => {
     <div>
       <ul className="board__list">
         {boards.map((board) => {
-          return <Card key={board.name} name={board.name} />;
+          return <Card key={board.name} name={board.name} board={false} />;
         })}
       </ul>
     </div>
