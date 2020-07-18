@@ -21,9 +21,11 @@ const Card = (props) => {
       >
         {props.name}
       </Link>
-      {props.replies
-        ? props.replies.map((reply) => <div key={reply._id}>{reply.text}</div>)
-        : ""}
+      {props.replies && props.replies[0] ? (
+        <p>Last reply on {props.replies[0].created_on}</p>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
