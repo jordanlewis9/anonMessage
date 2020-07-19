@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import "../App.css";
 import Header from "./Header";
+import Footer from "./Footer";
 import Home from "./Home";
 import Board from "./Board";
 import Thread from "./Thread";
@@ -16,6 +17,7 @@ const App = () => {
           <Route exact path="/b/:board/:thread_id" component={Thread} />
           <Route exact path="/b/:board" component={Board} />
         </div>
+        <Footer />
       </BrowserRouter>
     </div>
   );

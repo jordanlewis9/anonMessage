@@ -18,34 +18,38 @@ const NewThread = (props) => {
     <div>
       <h4 style={{ textAlign: "center" }}>Post New Thread</h4>
       <form onSubmit={handleSubmit} className="new-thread-form">
-        <label className="new-thread__title">
+        <label className="new-thread__title" for="title">
           Title:
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="new-thread__title__text"
-          />
         </label>
-        <label className="new-thread__text">
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="new-thread__title__text"
+          size="50"
+          name="title"
+        />
+        <label className="new-thread__text" for="text">
           Text:
-          <textarea
-            value={thread}
-            onChange={(e) => setThread(e.target.value)}
-            className="new-thread__text__text"
-            rows="5"
-            cols="50"
-          ></textarea>
         </label>
-        <label className="new-thread__password">
+        <textarea
+          value={thread}
+          onChange={(e) => setThread(e.target.value)}
+          className="new-thread__text__text"
+          rows="5"
+          cols="50"
+          name="text"
+        ></textarea>
+        <label className="new-thread__password" name="deletePassword">
           Set Delete Password:
-          <input
-            type="text"
-            value={deletePassword}
-            onChange={(e) => setDeletePassword(e.target.value)}
-            className="new-thread__password__text"
-          />
         </label>
+        <input
+          type="text"
+          value={deletePassword}
+          onChange={(e) => setDeletePassword(e.target.value)}
+          className="new-thread__password__text"
+          name="deletePassword"
+        />
         <input type="submit" value="Submit" className="new-thread__submit" />
       </form>
     </div>
