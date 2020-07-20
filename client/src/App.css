@@ -77,7 +77,7 @@ ul {
 .board__thread-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
   height: 80vh;
 }
@@ -86,6 +86,7 @@ ul {
   display: block;
   width: 100%;
   border-top: 5px solid black;
+  margin-bottom: 20px;
 }
 
 .thread__link {
@@ -101,10 +102,13 @@ ul {
 }
 
 .new-thread__title__text {
+  display: block;
   grid-area: title;
-  justify-self: stretch;
+  justify-self: start;
   margin-left: 10px;
   width: 100%;
+  padding: 0;
+  border: 1px solid gray;
 }
 
 .new-thread__text {
@@ -114,7 +118,7 @@ ul {
 
 .new-thread__text__text {
   grid-area: text;
-  justify-self: stretch;
+  justify-self: start;
   margin-left: 10px;
   padding: 0;
   width: 100%;
@@ -133,14 +137,17 @@ ul {
 
 .new-thread__submit {
   grid-area: submit;
+  justify-self: start;
+  margin-left: 10px;
+  width: auto;
 }
 
 .new-thread-form {
   display: grid;
   grid-row-gap: 10px;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr auto 1fr;
-  grid-template-areas: "title-label title ." "text-label text ." "password-label password submit";
+  grid-template-rows: 1fr auto 1fr 1fr;
+  grid-template-areas: "title-label title ." "text-label text ." "password-label password ." ". submit .";
 }
 
 .footer {

@@ -26,7 +26,6 @@ const NewThread = (props) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="new-thread__title__text"
-          size="50"
           name="title"
         />
         <label className="new-thread__text" for="text">
@@ -37,7 +36,6 @@ const NewThread = (props) => {
           onChange={(e) => setThread(e.target.value)}
           className="new-thread__text__text"
           rows="5"
-          cols="50"
           name="text"
         ></textarea>
         <label className="new-thread__password" name="deletePassword">
