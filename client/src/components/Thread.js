@@ -22,11 +22,13 @@ const Thread = () => {
   return (
     <div>
       <Link to={`/b/${board}`}>{board}</Link>
-      <h3>{thread.name}</h3>
-      <p>{thread.text}</p>
-      <Report thread={true} threadId={thread.id} board={board} />
-      <DeleteForm thread={true} threadId={thread.id} board={board} />
-      <NewReply threadId={thread.id} board={board} />
+      <div className="main-thread-container">
+        <h3>{thread.name}</h3>
+        <p>{thread.text}</p>
+        <Report thread={true} threadId={thread.id} board={board} />
+        <DeleteForm thread={true} threadId={thread.id} board={board} />
+        <NewReply threadId={thread.id} board={board} />
+      </div>
       <div>
         {thread.replies
           ? thread.replies.map((reply) => (

@@ -14,7 +14,7 @@ const Report = (props) => {
     document.location.reload(true);
   };
   return (
-    <div>
+    <div className="report-container">
       <form onSubmit={handleSubmit}>
         <input type="submit" value="Report" />
       </form>

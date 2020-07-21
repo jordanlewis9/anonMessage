@@ -60,7 +60,7 @@ ul {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 80vh;
+  height: auto;
 }
 
 .board__link {
@@ -68,6 +68,10 @@ ul {
   color: black;
   font-weight: 500;
   font-size: 24px;
+}
+
+.card__board {
+  margin-bottom: 20px;
 }
 
 .board__header {
@@ -79,7 +83,7 @@ ul {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 80vh;
+  height: auto;
 }
 
 .card__thread {
@@ -154,4 +158,9 @@ ul {
   width: 100%;
   height: 40px;
   text-align: center;
+}
+
+.main-thread-container {
+  border: 1px solid black;
+  box-shadow: 1px 1px;
 }
