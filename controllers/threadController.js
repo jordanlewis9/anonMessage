@@ -16,9 +16,7 @@ exports.createThread = async (req, res) => {
     }
     // look into board having same named threads
     req.body.board_id = board._id;
-    const newThread = await (await Thread.create(req.body)).populate({
-      path: "replies",
-    });
+    const newThread = await Thread.create(req.body);
     res.status(201).json({
       status: "success",
       newThread,

@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
   suite("API ROUTING FOR /api/threads/:board", function () {
-    suite("POST", function () {
+    suite("POST", async function () {
       test("Posting a new thread", function (done) {
         chai
           .request(server)
@@ -26,22 +26,33 @@ suite("Functional Tests", function () {
             delete_password: "ABC",
             name: "Functional Test",
           })
-          .end(async function (err, res) {
-            assert.equal(res.status, 201);
-            assert.equal(res.body.newThread.text, "Testing thread");
-            assert.isDefined(res.body.newThread.delete_password);
+          .end(function (err, res) {
+            assert.equal(res.status, 201, "Status is equal");
+            assert.equal(
+              res.body.newThread.text,
+              "Testing thread",
+              "Text is equal"
+            );
+            assert.isDefined(
+              res.body.newThread.delete_password,
+              "Password exists"
+            );
             assert.equal(
               res.body.newThread.created_on,
-              res.body.newThread.bumped_on
+              res.body.newThread.bumped_on,
+              "Times are equal"
             );
-            assert.isDefined(res.body.newThread._id);
-            assert.equal(res.body.newThread.reported, false);
-            assert.isArray(res.body.newThread.replies);
-            const deleteThread = await Thread.deleteOne({
-              name: "Testing thread",
-            });
+            assert.isDefined(res.body.newThread._id, "ID exists");
+            assert.equal(
+              res.body.newThread.reported,
+              false,
+              "Reported is false"
+            );
             done();
           });
+      });
+      const deleteThread = await Thread.deleteOne({
+        name: "Functional Test",
       });
     });
 

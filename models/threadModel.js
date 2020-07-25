@@ -24,14 +24,8 @@ const threadSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    created_on: {
-      type: Date,
-      default: Date.now,
-    },
-    bumped_on: {
-      type: Date,
-      default: Date.now,
-    },
+    created_on: Date,
+    bumped_on: Date,
     board_id: {
       type: mongoose.Schema.ObjectId,
       ref: "Board",
@@ -51,8 +45,15 @@ threadSchema.virtual("replies", {
 });
 
 threadSchema.pre("save", async function (next) {
-  const saltRounds = 14;
+  const saltRounds = 12;
   this.delete_password = await bcrypt.hash(this.delete_password, saltRounds);
+  next();
+});
+
+threadSchema.pre("save", function (next) {
+  const now = Date.now();
+  this.created_on = now;
+  this.bumped_on = now;
   next();
 });
 
