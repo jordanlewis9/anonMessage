@@ -16,7 +16,7 @@ chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
   suite("API ROUTING FOR /api/threads/:board", function () {
-    suite("POST", async function () {
+    suite("POST", function () {
       test("Posting a new thread", function (done) {
         chai
           .request(server)
@@ -26,7 +26,7 @@ suite("Functional Tests", function () {
             delete_password: "ABC",
             name: "Functional Test",
           })
-          .end(function (err, res) {
+          .end(async function (err, res) {
             assert.equal(res.status, 201, "Status is equal");
             assert.equal(
               res.body.newThread.text,
@@ -48,17 +48,70 @@ suite("Functional Tests", function () {
               false,
               "Reported is false"
             );
+            const deleteThread = await Thread.deleteOne({
+              name: "Functional Test",
+            });
             done();
           });
       });
-      const deleteThread = await Thread.deleteOne({
-        name: "Functional Test",
+    });
+
+    suite("GET", function () {
+      test("Get 10 most recently bumped threads", function (done) {
+        chai
+          .request(server)
+          .get("/api/threads/Cleveland%20Browns")
+          .end(function (err, res) {
+            assert.equal(res.body.status, "success", "Request was a success");
+            assert.isArray(res.body.threads, "Threads is an array");
+            assert.equal(
+              res.body.threads.length,
+              10,
+              "Threads array has 10 elements in it"
+            );
+            assert.equal(
+              res.body.threads[0].replies.length,
+              3,
+              "A thread with 4 replies only shows the 3 most recent"
+            );
+            assert.isUndefined(
+              res.body.threads[0].reported,
+              "Reported field does not exist"
+            );
+            assert.isUndefined(
+              res.body.threads[0].delete_password,
+              "Delete password does not exist"
+            );
+            done();
+          });
       });
     });
 
-    suite("GET", function () {});
-
-    suite("DELETE", function () {});
+    suite("DELETE", function () {
+      test("Delete a thread", async function () {
+        const testThread = await Thread.create({
+          name: "Test Delete Thread",
+          board: "Cincinnati Bengals",
+          text: "Testing Delete",
+          delete_password: "ABC",
+          board_id: "5ed83f1a0e878f45506301ba",
+        });
+        chai
+          .request(server)
+          .delete("/api/threads/Cincinnati%20Bengals")
+          .send({
+            thread_id: testThread.id,
+            delete_password: "ABC",
+          })
+          .end(function (err, res) {
+            assert.equal(
+              res.body.status,
+              "success",
+              "Thread was successfully deleted"
+            );
+          });
+      });
+    });
 
     suite("PUT", function () {});
   });
