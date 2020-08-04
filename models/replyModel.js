@@ -27,7 +27,7 @@ const replySchema = new mongoose.Schema({
 });
 
 replySchema.pre("save", async function (next) {
-  const saltRounds = 14;
+  const saltRounds = 12;
   this.delete_password = await bcrypt.hash(this.delete_password, saltRounds);
   next();
 });

@@ -33,6 +33,7 @@ exports.getThread = async (req, res) => {
       .populate({
         path: "replies",
         sort: { created_on: 1 },
+        select: "-reported",
       });
     if (!thread) {
       return res.status(400).json({

@@ -15,7 +15,7 @@ var Thread = require("../models/threadModel");
 chai.use(chaiHttp);
 
 suite("Functional Tests", function () {
-  suite("API ROUTING FOR /api/threads/:board", function () {
+  suite("API ROUTING FOR /api/threads/:board", async function () {
     suite("POST", function () {
       test("Posting a new thread", function (done) {
         chai
@@ -87,15 +87,35 @@ suite("Functional Tests", function () {
       });
     });
 
+    const testThread = await Thread.create({
+      name: "Test Delete Thread",
+      board: "Cincinnati Bengals",
+      text: "Testing Delete",
+      delete_password: "ABC",
+      board_id: "5ed83f1a0e878f45506301ba",
+    });
+
+    suite("PUT", function () {
+      test("Report a thread", function (done) {
+        chai
+          .request(server)
+          .put("/api/threads/Cincinnati%20Bengals")
+          .send({
+            thread_id: testThread.id,
+          })
+          .end(function (err, res) {
+            assert.equal(
+              res.body.status,
+              "success",
+              "Thread was successfully reported"
+            );
+            done();
+          });
+      });
+    });
+
     suite("DELETE", function () {
-      test("Delete a thread", async function () {
-        const testThread = await Thread.create({
-          name: "Test Delete Thread",
-          board: "Cincinnati Bengals",
-          text: "Testing Delete",
-          delete_password: "ABC",
-          board_id: "5ed83f1a0e878f45506301ba",
-        });
+      test("Delete a thread", function (done) {
         chai
           .request(server)
           .delete("/api/threads/Cincinnati%20Bengals")
@@ -109,17 +129,89 @@ suite("Functional Tests", function () {
               "success",
               "Thread was successfully deleted"
             );
+            done();
+          });
+      });
+    });
+  });
+
+  suite("API ROUTING FOR /api/replies/:board", function () {
+    suite("POST", function () {
+      test("Posting a reply", function (done) {
+        chai
+          .request(server)
+          .post("/api/replies/Cincinnati%20Bengals")
+          .send({
+            text: "Testing posting of reply",
+            delete_password: "ABC",
+            thread_id: "5f14ecc2f8753117e480f881",
+          })
+          .end(function (err, res) {
+            assert.equal(
+              res.body.status,
+              "success",
+              "Reply was successfully posted."
+            );
+            assert.isDefined(res.body.newReply._id, "ID exists");
+            assert.equal(
+              res.body.newReply.text,
+              "Testing posting of reply",
+              "Text was successfully saved."
+            );
+            assert.isDefined(
+              res.body.newReply.created_on,
+              "Created on exists for reply"
+            );
+            assert.isDefined(
+              res.body.newReply.delete_password,
+              "Delete password is saved"
+            );
+            assert.equal(
+              res.body.newReply.reported,
+              false,
+              "Reported is saved as false"
+            );
+            done();
           });
       });
     });
 
-    suite("PUT", function () {});
-  });
-
-  suite("API ROUTING FOR /api/replies/:board", function () {
-    suite("POST", function () {});
-
-    suite("GET", function () {});
+    suite("GET", function () {
+      test("Get a single thread with all of it's replies", function (done) {
+        chai
+          .request(server)
+          .get(
+            "/api/replies/Cleveland%20Browns?thread_id=5f14e97bf8753117e480f87e"
+          )
+          .end(function (err, res) {
+            assert.equal(
+              res.body.status,
+              "success",
+              "Single thread successfully received"
+            );
+            assert.equal(
+              res.body.thread.name,
+              "Baker Mayfield",
+              "Correct name shown"
+            );
+            assert.equal(
+              res.body.thread.board,
+              "Cleveland Browns",
+              "Thread is filed under correct board"
+            );
+            assert.isArray(res.body.thread.replies, "Replies is an array");
+            assert.isUndefined(
+              res.body.thread.replies[0].reported,
+              "Reported is hidden for replies"
+            );
+            assert.isUndefined(
+              res.body.thread.replies[0].delete_password,
+              "Delete password is hidden from replies"
+            );
+            done();
+          });
+      });
+    });
 
     suite("PUT", function () {});
 
