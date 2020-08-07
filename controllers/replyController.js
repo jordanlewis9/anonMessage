@@ -27,8 +27,10 @@ exports.createReply = async (req, res) => {
 
 exports.deleteReply = async (req, res) => {
   try {
-    const { _id, thread_id, delete_password } = req.body;
-    const replyToDelete = await Reply.findById(_id).select("+delete_password");
+    const { reply_id, thread_id, delete_password } = req.body;
+    const replyToDelete = await Reply.findById(reply_id).select(
+      "+delete_password"
+    );
     const match = await bcrypt.compare(
       delete_password,
       replyToDelete.delete_password
@@ -49,7 +51,7 @@ exports.deleteReply = async (req, res) => {
         message: "Incorrect password given.",
       });
     }
-    await Reply.findByIdAndUpdate(_id, { text: "[deleted]" });
+    await Reply.findByIdAndUpdate(reply_id, { text: "[deleted]" });
     res.status(200).json({
       status: "success",
     });

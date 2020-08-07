@@ -11,6 +11,7 @@ var chai = require("chai");
 var assert = chai.assert;
 var server = require("../server");
 var Thread = require("../models/threadModel");
+var Reply = require("../models/replyModel");
 
 chai.use(chaiHttp);
 
@@ -135,7 +136,7 @@ suite("Functional Tests", function () {
     });
   });
 
-  suite("API ROUTING FOR /api/replies/:board", function () {
+  suite("API ROUTING FOR /api/replies/:board", async function () {
     suite("POST", function () {
       test("Posting a reply", function (done) {
         chai
@@ -144,7 +145,7 @@ suite("Functional Tests", function () {
           .send({
             text: "Testing posting of reply",
             delete_password: "ABC",
-            thread_id: "5f14ecc2f8753117e480f881",
+            thread_id: "5f2ca85c49d6c23cf87fca3a",
           })
           .end(function (err, res) {
             assert.equal(
@@ -213,8 +214,40 @@ suite("Functional Tests", function () {
       });
     });
 
-    suite("PUT", function () {});
+    const testReply = await Reply.create({
+      text: "Test reply for PUT and DELETE",
+      delete_password: "ABC",
+      thread_id: "5f2ca85c49d6c23cf87fca3a",
+    });
 
-    suite("DELETE", function () {});
+    suite("PUT", function () {
+      test("Reporting a reply", function (done) {
+        chai
+          .request(server)
+          .put("/api/replies/Cincinnati%20Bengals")
+          .send({ thread_id: testReply.thread_id, reply_id: testReply._id })
+          .end(function (err, res) {
+            assert.equal(res.body.status, "success");
+            done();
+          });
+      });
+    });
+
+    suite("DELETE", function () {
+      test("Deleting a thread by replacing text with [deleted]", function (done) {
+        chai
+          .request(server)
+          .delete("/api/replies/Cincinnati%20Bengals")
+          .send({
+            thread_id: "5f2ca85c49d6c23cf87fca3a",
+            reply_id: testReply._id,
+            delete_password: "ABC",
+          })
+          .end(function (err, res) {
+            assert.equal(res.body.status, "success");
+            done();
+          });
+      });
+    });
   });
 });
