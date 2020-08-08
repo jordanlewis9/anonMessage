@@ -18,24 +18,28 @@ const NewReply = (props) => {
     document.location.reload(true);
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className="new-reply__container">
+      <form onSubmit={handleSubmit} className="new-reply__form">
+        <label className="new-reply__text" htmlFor="text">
           Reply:
-          <textarea
-            value={reply}
-            onChange={(e) => setReply(e.target.value)}
-          ></textarea>
         </label>
-        <label>
+        <textarea
+          value={reply}
+          onChange={(e) => setReply(e.target.value)}
+          className="new-reply__text__text"
+          name="text"
+        ></textarea>
+        <label className="new-reply__password" htmlFor="delete-password">
           Set Delete Password:
-          <input
-            type="text"
-            value={deletePassword}
-            onChange={(e) => setDeletePassword(e.target.value)}
-          />
         </label>
-        <input type="submit" value="Reply" />
+        <input
+          type="text"
+          value={deletePassword}
+          onChange={(e) => setDeletePassword(e.target.value)}
+          className="new-reply__password__text"
+          name="delete-password"
+        />
+        <input type="submit" value="Reply" className="new-reply__submit" />
       </form>
     </div>
   );

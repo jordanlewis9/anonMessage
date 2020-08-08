@@ -38,7 +38,7 @@ const NewThread = (props) => {
           rows="5"
           name="text"
         ></textarea>
-        <label className="new-thread__password" name="deletePassword">
+        <label className="new-thread__password" for="deletePassword">
           Set Delete Password:
         </label>
         <input

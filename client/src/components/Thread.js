@@ -27,7 +27,6 @@ const Thread = () => {
         <p>{thread.text}</p>
         <Report thread={true} threadId={thread.id} board={board} />
         <DeleteForm thread={true} threadId={thread.id} board={board} />
-        <NewReply threadId={thread.id} board={board} />
       </div>
       <div>
         {thread.replies
@@ -43,6 +42,7 @@ const Thread = () => {
             ))
           : "Loading..."}
       </div>
+      <NewReply threadId={thread.id} board={board} />
     </div>
   );
 };

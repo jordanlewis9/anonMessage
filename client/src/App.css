@@ -164,3 +164,30 @@ ul {
   border: 1px solid black;
   box-shadow: 1px 1px;
 }
+
+.new-reply__container {
+  margin-top: 20px;
+}
+
+.new-reply__form {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  grid-template-rows: auto;
+}
+
+.new-reply__text,
+.new-reply__password {
+  justify-self: end;
+  align-self: center;
+  margin-right: 5px;
+}
+
+.new-reply__submit {
+  justify-self: start;
+  align-self: center;
+  margin-left: 5px;
+}
+
+.new-reply__password__text {
+  align-self: center;
+}
