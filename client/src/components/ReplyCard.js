@@ -4,7 +4,10 @@ import Report from "./Report";
 
 const ReplyCard = (props) => {
   return (
-    <div className="card__reply">
+    <div
+      className="card__reply"
+      style={{ borderBottom: `1px solid ${props.borderColor}` }}
+    >
       <p>{props.text}</p>
       <Report
         replyId={props.replyId}

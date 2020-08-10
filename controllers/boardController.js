@@ -10,18 +10,33 @@ exports.createBoard = async (req, res) => {
 };
 
 exports.getBoard = async (req, res) => {
-  const board = await Board.findOne({ name: req.params.board }).populate({
-    path: "threads",
-  });
-  const threads = await Thread.find()
-    .sort({ bumped_on: -1 })
-    .limit(10)
-    .populate({ path: "replies" });
-  console.log(board);
-  res.status(200).json({
-    status: "success",
-    board,
-  });
+  try {
+    const board = await Board.findOne({ name: req.params.board }).populate({
+      path: "threads",
+    });
+    // const threads = await Thread.find()
+    //   .sort({ bumped_on: -1 })
+    //   .limit(10)
+    //   .populate({ path: "replies" });
+    if (!board) {
+      return res.status(400).json({
+        status: "fail",
+        board: null,
+        message: "Board could not be found.",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      board,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      status: "fail",
+      board: null,
+      message: "Board could not be found.",
+    });
+  }
 };
 
 exports.getBoards = async (req, res) => {

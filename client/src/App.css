@@ -41,8 +41,7 @@ ul {
 
 .button__delete {
   box-sizing: content-box;
-  border-radius: 5%;
-  background: rgb(252, 91, 91);
+  background: rgb(252, 61, 61);
   cursor: pointer;
   margin-left: 5px;
 }
@@ -190,4 +189,13 @@ ul {
 
 .new-reply__password__text {
   align-self: center;
+}
+
+.new-reply__text__text {
+  resize: vertical;
+}
+
+.board-link {
+  margin: 10px auto;
+  display: block;
 }
