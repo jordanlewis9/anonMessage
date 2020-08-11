@@ -10,10 +10,22 @@ const Board = () => {
   const [currentBoard, setCurrentBoard] = useState({});
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/api/threads/${board}`);
-      const boardResponse = await axios.get(`/api/${board}`);
-      setCurrentBoard(boardResponse.data);
-      setThreads(response.data.threads);
+      try {
+        const threadResponse = await axios.get(`/api/threads/${board}`);
+        const boardResponse = await axios.get(`/api/${board}`);
+        if (boardResponse.status === 200 && threadResponse.status === 200) {
+          setThreads(threadResponse.data.threads);
+          setCurrentBoard(boardResponse.data);
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          setCurrentBoard({ board: null });
+        } else {
+          setCurrentBoard({
+            error: "There has been an unidentified error. Please try again.",
+          });
+        }
+      }
     };
     fetchData();
   }, [board]);
@@ -26,6 +38,8 @@ const Board = () => {
     );
   } else if (!currentBoard.status) {
     return <h2 className="board__header">Loading...</h2>;
+  } else if (currentBoard.error) {
+    return <h2 className="board__header">{currentBoard.error}</h2>;
   } else {
     return (
       <div>

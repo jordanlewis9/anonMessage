@@ -19,6 +19,7 @@ exports.getBoard = async (req, res) => {
     //   .limit(10)
     //   .populate({ path: "replies" });
     if (!board) {
+      console.log("no board");
       return res.status(400).json({
         status: "fail",
         board: null,
@@ -30,8 +31,9 @@ exports.getBoard = async (req, res) => {
       board,
     });
   } catch (err) {
+    console.log("catch");
     console.log(err);
-    res.status(400).json({
+    return res.status(400).json({
       status: "fail",
       board: null,
       message: "Board could not be found.",
