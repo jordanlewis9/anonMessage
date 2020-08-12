@@ -22,6 +22,10 @@ exports.createReply = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -57,6 +61,10 @@ exports.deleteReply = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -89,5 +97,9 @@ exports.reportReply = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };

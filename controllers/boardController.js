@@ -1,6 +1,7 @@
 const Board = require("./../models/boardModel");
 const Thread = require("./../models/threadModel");
 
+// No route defined to create a board
 exports.createBoard = async (req, res) => {
   const newBoard = await Board.create({ name: req.body.name });
   res.status(200).json({
@@ -14,10 +15,6 @@ exports.getBoard = async (req, res) => {
     const board = await Board.findOne({ name: req.params.board }).populate({
       path: "threads",
     });
-    // const threads = await Thread.find()
-    //   .sort({ bumped_on: -1 })
-    //   .limit(10)
-    //   .populate({ path: "replies" });
     if (!board) {
       console.log("no board");
       return res.status(400).json({
@@ -31,8 +28,6 @@ exports.getBoard = async (req, res) => {
       board,
     });
   } catch (err) {
-    console.log("catch");
-    console.log(err);
     return res.status(400).json({
       status: "fail",
       board: null,
@@ -42,9 +37,22 @@ exports.getBoard = async (req, res) => {
 };
 
 exports.getBoards = async (req, res) => {
-  const boards = await Board.find();
-  res.status(200).json({
-    status: "success",
-    boards,
-  });
+  try {
+    const boards = await Board.find();
+    if (!boards) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Boards could not be obtained.",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      boards,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: "fail",
+      message: "Boards could not be obtained.",
+    });
+  }
 };

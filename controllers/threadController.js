@@ -23,6 +23,10 @@ exports.createThread = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -52,6 +56,10 @@ exports.getThread = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -69,12 +77,22 @@ exports.getThreads = async (req, res) => {
           select: "-reported",
         },
       });
+    if (!threads) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Threads could not be obtained",
+      });
+    }
     res.status(200).json({
       status: "success",
       threads,
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -110,6 +128,10 @@ exports.deleteThread = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };
 
@@ -133,5 +155,9 @@ exports.reportThread = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
   }
 };

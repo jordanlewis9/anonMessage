@@ -15,6 +15,8 @@ const replySchema = new mongoose.Schema({
     type: String,
     required: [true, "A reply must contain a password to delete it"],
     select: false,
+    minlength: 3,
+    maxlength: 8,
   },
   created_on: {
     type: Date,

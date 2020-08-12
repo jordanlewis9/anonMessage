@@ -19,6 +19,8 @@ const threadSchema = new mongoose.Schema(
       type: String,
       required: [true, "A thread must have a password to delete it"],
       select: false,
+      minlength: 3,
+      maxlength: 8,
     },
     reported: {
       type: Boolean,
