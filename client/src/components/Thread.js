@@ -12,21 +12,49 @@ const Thread = () => {
   let { board, thread_id } = useParams();
   useEffect(() => {
     const fetchReplies = async () => {
-      const response = await axios.get(
-        `/api/replies/${board}?thread_id=${thread_id}`
-      );
-      const boardResponse = await axios.get(`/api/${board}`);
-      setThread(response.data.thread);
-      setBoardColor({ color: boardResponse.data.board.color });
+      try {
+        const response = await axios.get(
+          `/api/replies/${board}?thread_id=${thread_id}`
+        );
+        if (response.data.status === "fail") {
+          console.log("failed");
+          setThread({ status: "fail" });
+        } else {
+          console.log("success");
+          setThread(response.data.thread);
+        }
+      } catch (error) {
+        if (error.response.status === 400) {
+          console.log(error.response.status);
+          setThread({ status: "fail" });
+        } else {
+          setThread({ status: "unidentified error" });
+        }
+      }
+      try {
+        const boardResponse = await axios.get(`/api/${board}`);
+        setBoardColor({ color: boardResponse.data.board.color });
+      } catch (error) {
+        if (error.response.status === 400) {
+          console.log("board failed, shouldnt see this");
+        }
+      }
     };
     fetchReplies();
   }, [board, thread_id]);
   console.log(thread);
-  if (thread === null) {
+  if (thread.status === "fail") {
     return (
       <h2>
-        No board or thread could be found by the given names. Please return to
-        our <Link to="/">home</Link> page.
+        No board or thread could be found with the given parameters. Please
+        return to our <Link to="/">home</Link> page.
+      </h2>
+    );
+  } else if (thread.status === "unidentified error") {
+    return (
+      <h2>
+        There has been an {thread.status}. Please return to our{" "}
+        <Link to="/">home</Link> page or try again.
       </h2>
     );
   } else if (!thread.name) {

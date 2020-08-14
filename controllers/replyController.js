@@ -71,7 +71,6 @@ exports.deleteReply = async (req, res) => {
 exports.reportReply = async (req, res) => {
   try {
     const isCorrectThread = await Thread.findById(req.body.thread_id);
-    console.log(isCorrectThread);
     if (!isCorrectThread) {
       return res.status(400).json({
         status: "fail",
