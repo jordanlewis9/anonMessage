@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { timeFormat } from "./timeFormat";
 
 const Card = (props) => {
   return (
@@ -22,7 +23,10 @@ const Card = (props) => {
         {props.name}
       </Link>
       {props.replies && props.replies[0] ? (
-        <p>Last reply on {props.replies[0].created_on}</p>
+        <p>
+          Last reply on{" "}
+          {timeFormat(new Date(props.replies[0].created_on).toLocaleString())}
+        </p>
       ) : (
         ""
       )}

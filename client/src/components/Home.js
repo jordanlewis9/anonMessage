@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Card from "./Card";
+import Card from "./utils/Card";
 
 const Home = () => {
   const [boards, setBoards] = useState([]);

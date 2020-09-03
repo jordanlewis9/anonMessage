@@ -1,6 +1,7 @@
 import React from "react";
-import DeleteForm from "./DeleteForm";
-import Report from "./Report";
+import DeleteForm from "../utils/DeleteForm";
+import Report from "../utils/Report";
+import { timeFormat } from "../utils/timeFormat";
 
 const ReplyCard = (props) => {
   return (
@@ -8,6 +9,7 @@ const ReplyCard = (props) => {
       className="card__reply"
       style={{ borderBottom: `1px solid ${props.borderColor}` }}
     >
+      <p>{timeFormat(new Date(props.timeStamp).toLocaleString())}</p>
       <p>{props.text}</p>
       <Report
         replyId={props.replyId}

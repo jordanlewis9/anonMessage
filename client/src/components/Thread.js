@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import ReplyCard from "./ReplyCard";
-import NewReply from "./NewReply";
-import DeleteForm from "./DeleteForm";
-import Report from "./Report";
+import ReplyCard from "./replies/ReplyCard";
+import NewReply from "./replies/NewReply";
+import DeleteForm from "./utils/DeleteForm";
+import Report from "./utils/Report";
 
 const Thread = () => {
   const [thread, setThread] = useState({});
   const [boardColor, setBoardColor] = useState({ color: "black" });
+  const [pageNumber, setPageNumber] = useState(1);
   let { board, thread_id } = useParams();
   useEffect(() => {
     const fetchReplies = async () => {
@@ -74,18 +75,26 @@ const Thread = () => {
         </div>
         <div>
           {thread.replies
-            ? thread.replies.map((reply) => (
-                <ReplyCard
-                  key={reply._id}
-                  text={reply.text}
-                  replyId={reply._id}
-                  threadId={thread.id}
-                  board={board}
-                  reported={reply.reported}
-                  borderColor={boardColor.color}
-                />
-              ))
+            ? thread.replies
+                .slice(pageNumber * 10 - 10, pageNumber * 10)
+                .map((reply) => (
+                  <ReplyCard
+                    key={reply._id}
+                    text={reply.text}
+                    replyId={reply._id}
+                    threadId={thread.id}
+                    board={board}
+                    reported={reply.reported}
+                    borderColor={boardColor.color}
+                    timeStamp={reply.created_on}
+                  />
+                ))
             : "Loading..."}
+        </div>
+        <div>
+          <button onClick={() => setPageNumber(pageNumber - 1)}>Back</button>
+          <p>{pageNumber}</p>
+          <button onClick={() => setPageNumber(pageNumber + 1)}>Forward</button>
         </div>
         <NewReply threadId={thread.id} board={board} />
       </div>

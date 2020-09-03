@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import Card from "./Card";
-import NewThread from "./NewThread";
+import Card from "./utils/Card";
+import NewThread from "./threads/NewThread";
 
 const Board = () => {
   let { board } = useParams();
