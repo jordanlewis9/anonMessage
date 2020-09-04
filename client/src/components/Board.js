@@ -8,6 +8,7 @@ const Board = () => {
   let { board } = useParams();
   const [threads, setThreads] = useState([]);
   const [currentBoard, setCurrentBoard] = useState({});
+  const [pageNumber, setPageNumber] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +30,27 @@ const Board = () => {
     };
     fetchData();
   }, [board]);
+  console.log(threads);
+  const showPagination = (threads) => {
+    if (threads.length <= 10) {
+      return "";
+    }
+    return (
+      <div>
+        {pageNumber === 1 ? (
+          ""
+        ) : (
+          <button onClick={() => setPageNumber(pageNumber - 1)}>Back</button>
+        )}
+        <p>{pageNumber}</p>
+        {pageNumber * 10 >= threads.length ? (
+          ""
+        ) : (
+          <button onClick={() => setPageNumber(pageNumber + 1)}>Forward</button>
+        )}
+      </div>
+    );
+  };
   if (currentBoard.board === null) {
     return (
       <h2 className="board__header">
@@ -45,17 +67,21 @@ const Board = () => {
       <div>
         <h2 className="board__header">{board}</h2>
         <div className="board__thread-container">
-          {threads.map((thread) => (
-            <Card
-              key={thread.name}
-              name={thread.name}
-              thread_id={thread.id}
-              board={board}
-              replies={thread.replies}
-              borderColor={currentBoard.board.color}
-            />
-          ))}
+          {threads
+            .slice(pageNumber * 10 - 10, pageNumber * 10)
+            .map((thread) => (
+              <Card
+                key={thread.name}
+                name={thread.name}
+                thread_id={thread.id}
+                board={board}
+                replies={thread.replies}
+                threadCreatedOn={thread.created_on}
+                borderColor={currentBoard.board.color}
+              />
+            ))}
         </div>
+        {showPagination(threads)}
         <NewThread board={board} />
       </div>
     );

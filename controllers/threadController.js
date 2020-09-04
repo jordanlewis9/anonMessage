@@ -67,7 +67,6 @@ exports.getThreads = async (req, res) => {
   try {
     const threads = await Thread.find({ board: req.params.board })
       .sort({ bumped_on: -1 })
-      .limit(10)
       .select("-reported")
       .populate({
         path: "replies",

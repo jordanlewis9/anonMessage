@@ -44,6 +44,26 @@ const Thread = () => {
     fetchReplies();
   }, [board, thread_id]);
   console.log(thread);
+  const showPagination = (replies) => {
+    if (replies.length <= 10) {
+      return "";
+    }
+    return (
+      <div>
+        {pageNumber === 1 ? (
+          ""
+        ) : (
+          <button onClick={() => setPageNumber(pageNumber - 1)}>Back</button>
+        )}
+        <p>{pageNumber}</p>
+        {pageNumber * 10 >= replies.length ? (
+          ""
+        ) : (
+          <button onClick={() => setPageNumber(pageNumber + 1)}>Forward</button>
+        )}
+      </div>
+    );
+  };
   if (thread.status === "fail") {
     return (
       <h2>
@@ -91,11 +111,7 @@ const Thread = () => {
                 ))
             : "Loading..."}
         </div>
-        <div>
-          <button onClick={() => setPageNumber(pageNumber - 1)}>Back</button>
-          <p>{pageNumber}</p>
-          <button onClick={() => setPageNumber(pageNumber + 1)}>Forward</button>
-        </div>
+        {showPagination(thread.replies)}
         <NewReply threadId={thread.id} board={board} />
       </div>
     );

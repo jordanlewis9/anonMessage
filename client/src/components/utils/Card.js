@@ -28,7 +28,10 @@ const Card = (props) => {
           {timeFormat(new Date(props.replies[0].created_on).toLocaleString())}
         </p>
       ) : (
-        ""
+        <p>
+          Created on{" "}
+          {timeFormat(new Date(props.threadCreatedOn).toLocaleString())}
+        </p>
       )}
     </div>
   );
