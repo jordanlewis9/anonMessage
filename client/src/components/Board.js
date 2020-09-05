@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import Card from "./utils/Card";
 import NewThread from "./threads/NewThread";
+import Pagination from "./utils/Pagination";
 
 const Board = () => {
   let { board } = useParams();
@@ -81,7 +82,11 @@ const Board = () => {
               />
             ))}
         </div>
-        {showPagination(threads)}
+        <Pagination
+          topic={threads}
+          stateFn={setPageNumber}
+          stateNum={pageNumber}
+        />
         <NewThread board={board} />
       </div>
     );

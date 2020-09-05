@@ -18,7 +18,7 @@ const NewThread = (props) => {
     <div>
       <h4 style={{ textAlign: "center" }}>Post New Thread</h4>
       <form onSubmit={handleSubmit} className="new-thread-form">
-        <label className="new-thread__title" for="title">
+        <label className="new-thread__title" htmlFor="title">
           Title:
         </label>
         <input
@@ -28,7 +28,7 @@ const NewThread = (props) => {
           className="new-thread__title__text"
           name="title"
         />
-        <label className="new-thread__text" for="text">
+        <label className="new-thread__text" htmlFor="text">
           Text:
         </label>
         <textarea
@@ -38,7 +38,7 @@ const NewThread = (props) => {
           rows="5"
           name="text"
         ></textarea>
-        <label className="new-thread__password" for="deletePassword">
+        <label className="new-thread__password" htmlFor="deletePassword">
           Set Delete Password:
         </label>
         <input

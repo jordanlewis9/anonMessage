@@ -3,6 +3,25 @@ import { Link } from "react-router-dom";
 import { timeFormat } from "./timeFormat";
 
 const Card = (props) => {
+  const renderTime = () => {
+    if (props.replies && props.replies[0]) {
+      return (
+        <p>
+          Last reply on{" "}
+          {timeFormat(new Date(props.replies[0].created_on).toLocaleString())}
+        </p>
+      );
+    } else if (props.replies) {
+      return (
+        <p>
+          Created on{" "}
+          {timeFormat(new Date(props.threadCreatedOn).toLocaleString())}
+        </p>
+      );
+    } else {
+      return null;
+    }
+  };
   return (
     <div
       className={props.board ? "card__thread" : "card__board"}
@@ -22,17 +41,7 @@ const Card = (props) => {
       >
         {props.name}
       </Link>
-      {props.replies && props.replies[0] ? (
-        <p>
-          Last reply on{" "}
-          {timeFormat(new Date(props.replies[0].created_on).toLocaleString())}
-        </p>
-      ) : (
-        <p>
-          Created on{" "}
-          {timeFormat(new Date(props.threadCreatedOn).toLocaleString())}
-        </p>
-      )}
+      {renderTime()}
     </div>
   );
 };
