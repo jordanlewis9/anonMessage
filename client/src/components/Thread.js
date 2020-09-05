@@ -45,46 +45,6 @@ const Thread = () => {
     fetchReplies();
   }, [board, thread_id]);
   console.log(thread);
-  // const showPagination = (replies) => {
-  //   if (replies.length <= 10) {
-  //     return "";
-  //   }
-  //   return (
-  //     <div className="pagination">
-  //       {pageNumber === 1 ? (
-  //         <button
-  //           className="pagination__button"
-  //           style={{ visibility: "hidden" }}
-  //         >
-  //           Previous Page
-  //         </button>
-  //       ) : (
-  //         <button
-  //           onClick={() => setPageNumber(pageNumber - 1)}
-  //           className="pagination__button"
-  //         >
-  //           Previous Page
-  //         </button>
-  //       )}
-  //       <p className="pagination__number">{pageNumber}</p>
-  //       {pageNumber * 10 >= replies.length ? (
-  //         <button
-  //           className="pagination__button"
-  //           style={{ visibility: "hidden" }}
-  //         >
-  //           Next Page
-  //         </button>
-  //       ) : (
-  //         <button
-  //           onClick={() => setPageNumber(pageNumber + 1)}
-  //           className="pagination__button"
-  //         >
-  //           Next Page
-  //         </button>
-  //       )}
-  //     </div>
-  //   );
-  // };
   if (thread.status === "fail") {
     return (
       <h2>

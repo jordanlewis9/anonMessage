@@ -32,26 +32,6 @@ const Board = () => {
     fetchData();
   }, [board]);
   console.log(threads);
-  const showPagination = (threads) => {
-    if (threads.length <= 10) {
-      return "";
-    }
-    return (
-      <div>
-        {pageNumber === 1 ? (
-          ""
-        ) : (
-          <button onClick={() => setPageNumber(pageNumber - 1)}>Back</button>
-        )}
-        <p>{pageNumber}</p>
-        {pageNumber * 10 >= threads.length ? (
-          ""
-        ) : (
-          <button onClick={() => setPageNumber(pageNumber + 1)}>Forward</button>
-        )}
-      </div>
-    );
-  };
   if (currentBoard.board === null) {
     return (
       <h2 className="board__header">
