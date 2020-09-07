@@ -6,13 +6,26 @@ const NewThread = (props) => {
   const [name, setName] = useState("");
   const [deletePassword, setDeletePassword] = useState("");
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post(`/api/threads/${props.board}`, {
-      name: name,
-      text: thread,
-      delete_password: deletePassword,
-    });
-    document.location.reload(true);
+    try {
+      e.preventDefault();
+      await axios.post(`/api/threads/${props.board}`, {
+        name: name,
+        text: thread,
+        delete_password: deletePassword,
+      });
+      document.location.reload(true);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+  const invalidPassword = (e) => {
+    let message;
+    if (deletePassword.length < 3) {
+      message = `<p>Passwords must be greater than ${deletePassword.length} characters long.`;
+    } else {
+      message = `<p>Passwords must be less than ${deletePassword.length} characters long.`;
+    }
+    e.target.insertAdjacentHTML("afterend", message);
   };
   return (
     <div>
@@ -42,11 +55,14 @@ const NewThread = (props) => {
           Set Delete Password:
         </label>
         <input
-          type="text"
+          type="password"
           value={deletePassword}
           onChange={(e) => setDeletePassword(e.target.value)}
           className="new-thread__password__text"
           name="deletePassword"
+          minLength="3"
+          maxLength="8"
+          onInvalid={(e) => invalidPassword(e)}
         />
         <input type="submit" value="Submit" className="new-thread__submit" />
       </form>

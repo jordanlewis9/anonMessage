@@ -23,9 +23,8 @@ exports.createThread = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
+    res.status(400).send({
+      err,
     });
   }
 };
