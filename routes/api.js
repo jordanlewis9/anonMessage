@@ -1,14 +1,3 @@
-/*
- *
- *
- *       Complete the API routing below
- *
- *
- */
-
-"use strict";
-
-var expect = require("chai").expect;
 const threadController = require("./../controllers/threadController");
 const replyController = require("./../controllers/replyController");
 const boardController = require("./../controllers/boardController");
@@ -28,7 +17,9 @@ module.exports = function (app) {
     .delete(replyController.deleteReply)
     .put(replyController.reportReply);
 
-  // app.route("/api/board").post(boardController.createBoard);
   app.route("/api/boards").get(boardController.getBoards);
   app.route("/api/:board").get(boardController.getBoard);
+
+  // Uncomment to add a board via API
+  // app.route("/api/board").post(boardController.createBoard);
 };

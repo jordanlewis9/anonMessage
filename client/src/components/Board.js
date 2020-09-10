@@ -31,7 +31,6 @@ const Board = () => {
     };
     fetchData();
   }, [board]);
-  console.log(threads);
   if (currentBoard.board === null) {
     return (
       <h2 className="board__header">

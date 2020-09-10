@@ -5,7 +5,6 @@ const DeleteForm = (props) => {
   const [password, setPassword] = useState("");
   const passwordChange = (e) => {
     setPassword(e.target.value);
-    console.log(password);
   };
   const deletePost = async (e) => {
     e.preventDefault();

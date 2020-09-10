@@ -19,10 +19,8 @@ const Thread = () => {
           `/api/replies/${board}?thread_id=${thread_id}`
         );
         if (response.data.status === "fail") {
-          console.log("failed");
           setThread({ status: "fail" });
         } else {
-          console.log("success");
           setThread(response.data.thread);
         }
       } catch (error) {
@@ -44,7 +42,6 @@ const Thread = () => {
     };
     fetchReplies();
   }, [board, thread_id]);
-  console.log(thread);
   if (thread.status === "fail") {
     return (
       <h2>
@@ -60,7 +57,6 @@ const Thread = () => {
       </h2>
     );
   } else if (!thread.name) {
-    console.log(thread);
     return <h2>Loading...</h2>;
   } else {
     return (

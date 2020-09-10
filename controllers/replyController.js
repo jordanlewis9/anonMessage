@@ -8,7 +8,6 @@ exports.createReply = async (req, res) => {
     const thread = await Thread.findByIdAndUpdate(req.body.thread_id, {
       bumped_on: req.body.created_on,
     });
-    console.log(req.body);
     if (!thread) {
       return res.status(400).json({
         status: "fail",
