@@ -10,9 +10,6 @@ const NewReply = (props) => {
     valid: null,
     message: "",
   });
-  // const handleChange = (e) => {
-  //   setReply = e.target.value;
-  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (reply.length < 1) {
@@ -55,18 +52,20 @@ const NewReply = (props) => {
         <label className="new-reply__password" htmlFor="delete-password">
           Set Delete Password:
         </label>
-        <div>
+        <div className="new-reply__password__text">
           <input
             type="password"
             value={deletePassword}
             onChange={(e) => setDeletePassword(e.target.value)}
-            onFocus={() => setValidPassword({ valid: null, message: "" })}
-            className="new-reply__password__text"
             name="delete-password"
-            data-tip="React-tooltip"
+            className={`new-reply__password__input ${
+              validPassword.valid === false ? "input__error" : ""
+            }`}
           />
           {validPassword.valid === false ? (
-            <ReactTooltip>{validPassword.message}</ReactTooltip>
+            <p className="new-reply__password__error">
+              {validPassword.message}
+            </p>
           ) : (
             ""
           )}

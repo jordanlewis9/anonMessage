@@ -191,6 +191,15 @@ ul {
   align-self: center;
 }
 
+.new-reply__password__input {
+  border-radius: 1px;
+}
+
+.input__error {
+  border-color: rgb(202, 6, 6);
+  border-radius: 1px;
+}
+
 .new-reply__text__text {
   resize: vertical;
 }
