@@ -189,15 +189,25 @@ ul {
 
 .new-reply__password__text {
   align-self: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .new-reply__password__input {
+  align-self: center;
   border-radius: 1px;
 }
 
 .input__error {
   border-color: rgb(202, 6, 6);
+  outline-color: rgb(202, 6, 6);
   border-radius: 1px;
+}
+
+.new-reply__password__error {
+  font-size: 10px;
+  color: rgb(202, 6, 6);
+  align-self: end;
 }
 
 .new-reply__text__text {

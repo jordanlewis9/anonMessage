@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ReactTooltip from "react-tooltip";
 
 const NewReply = (props) => {
   const [reply, setReply] = useState("");
