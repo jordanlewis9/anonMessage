@@ -10,13 +10,14 @@ const replySchema = new mongoose.Schema({
   text: {
     type: String,
     required: [true, "A reply must contain text"],
+    maxlength: [10000, "A reply may only contain up to 10,000 characters"],
   },
   delete_password: {
     type: String,
     required: [true, "A reply must contain a password to delete it"],
     select: false,
-    minlength: [3, "A password must contain at least 3 characters."],
-    maxlength: [8, "A password must contain 8 or fewer characters."],
+    minlength: [3, "A password must contain at least 3 characters"],
+    maxlength: [8, "A password must contain 8 or fewer characters"],
   },
   created_on: {
     type: Date,

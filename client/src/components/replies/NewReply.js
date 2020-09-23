@@ -4,17 +4,24 @@ import axios from "axios";
 const NewReply = (props) => {
   const [reply, setReply] = useState("");
   const [deletePassword, setDeletePassword] = useState("");
-  const [validReply, setValidReply] = useState(null);
+  const [validReply, setValidReply] = useState({
+    valid: null,
+    message: "",
+  });
   const [validPassword, setValidPassword] = useState({
     valid: null,
     message: "",
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (reply.length < 1) {
-      setValidReply(false);
-      return;
-    }
+    setValidReply({
+      valid: null,
+      message: "",
+    });
+    setValidPassword({
+      valid: null,
+      message: "",
+    });
     console.log(props.threadId);
     try {
       await axios.post(`/api/replies/${props.board}`, {
@@ -24,11 +31,52 @@ const NewReply = (props) => {
       });
       document.location.reload(true);
     } catch (err) {
-      console.log(err.response.data.message.split(" ").slice(4).join(" "));
-      setValidPassword({
-        valid: false,
-        message: err.response.data.message.split(" ").slice(4).join(" "),
-      });
+      if (reply.length < 1 && deletePassword.length < 3) {
+        console.log("hi");
+        setValidReply({
+          valid: false,
+          message: "A reply must contain at least 1 character",
+        });
+        setValidPassword({
+          valid: false,
+          message: "A password must contain at least 3 characters",
+        });
+        return;
+      } else if (reply.length < 1 && deletePassword.length > 8) {
+        setValidReply({
+          valid: false,
+          message: "A reply must contain at least 1 character",
+        });
+        setValidPassword({
+          valid: false,
+          message: "A password must contain at most 8 characters",
+        });
+        return;
+      } else if (reply.length > 10000) {
+        setValidReply({
+          valid: false,
+          message: "A reply can only contain up to 10,000 characters",
+        });
+        return;
+      } else if (reply.length < 1) {
+        setValidReply({
+          valid: false,
+          message: "A reply must contain at least 1 character",
+        });
+        return;
+      } else if (deletePassword.length < 3) {
+        setValidPassword({
+          valid: false,
+          message: "A password must contain at least 3 characters",
+        });
+        return;
+      } else if (deletePassword.length > 8) {
+        setValidPassword({
+          valid: false,
+          message: "A password must contain at most 8 characters",
+        });
+        return;
+      }
     }
   };
   return (
@@ -37,21 +85,25 @@ const NewReply = (props) => {
         <label className="new-reply__text" htmlFor="text">
           Reply:
         </label>
-        <textarea
-          value={reply}
-          onChange={(e) => setReply(e.target.value)}
-          className="new-reply__text__text"
-          name="text"
-        ></textarea>
-        {validReply === false ? (
-          <p>Reply must contain at least one character</p>
-        ) : (
-          ""
-        )}
+        <div className="new-reply__input__containers">
+          <textarea
+            value={reply}
+            onChange={(e) => setReply(e.target.value)}
+            className={`new-reply__text__text ${
+              validReply.valid === false ? "input__error" : ""
+            }`}
+            name="text"
+          ></textarea>
+          {validReply.valid === false ? (
+            <p className="new-reply__error">{validReply.message}</p>
+          ) : (
+            ""
+          )}
+        </div>
         <label className="new-reply__password" htmlFor="delete-password">
           Set Delete Password:
         </label>
-        <div className="new-reply__password__text">
+        <div className="new-reply__input__containers">
           <input
             type="password"
             value={deletePassword}
@@ -62,9 +114,7 @@ const NewReply = (props) => {
             }`}
           />
           {validPassword.valid === false ? (
-            <p className="new-reply__password__error">
-              {validPassword.message}
-            </p>
+            <p className="new-reply__error">{validPassword.message}</p>
           ) : (
             ""
           )}

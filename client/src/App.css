@@ -187,10 +187,23 @@ ul {
   margin-left: 5px;
 }
 
-.new-reply__password__text {
+@media screen and (max-width: 800px) {
+  .new-reply__form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+  }
+
+  .new-reply__submit {
+    justify-self: end;
+  }
+}
+
+.new-reply__input__containers {
   align-self: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: start;
 }
 
 .new-reply__password__input {
@@ -204,10 +217,9 @@ ul {
   border-radius: 1px;
 }
 
-.new-reply__password__error {
+.new-reply__error {
   font-size: 10px;
   color: rgb(202, 6, 6);
-  align-self: end;
 }
 
 .new-reply__text__text {
