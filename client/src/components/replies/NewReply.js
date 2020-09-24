@@ -32,7 +32,6 @@ const NewReply = (props) => {
       document.location.reload(true);
     } catch (err) {
       if (reply.length < 1 && deletePassword.length < 3) {
-        console.log("hi");
         setValidReply({
           valid: false,
           message: "A reply must contain at least 1 character",
@@ -85,7 +84,7 @@ const NewReply = (props) => {
         <label className="new-reply__text" htmlFor="text">
           Reply:
         </label>
-        <div className="new-reply__input__containers">
+        <div className="new-reply__input__containers new-reply__textarea__container">
           <textarea
             value={reply}
             onChange={(e) => setReply(e.target.value)}
@@ -103,7 +102,7 @@ const NewReply = (props) => {
         <label className="new-reply__password" htmlFor="delete-password">
           Set Delete Password:
         </label>
-        <div className="new-reply__input__containers">
+        <div className="new-reply__input__containers new-reply__password__container">
           <input
             type="password"
             value={deletePassword}

@@ -5,7 +5,9 @@ const threadSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "A thread must belong to a board"],
+      required: [true, "A thread must have a title"],
+      minlength: [1, "A title must contain at least 1 character"],
+      maxlength: [200, "A title must contain at most 200 characters"],
     },
     board: {
       type: String,
@@ -14,13 +16,18 @@ const threadSchema = new mongoose.Schema(
     text: {
       type: String,
       required: [true, "A thread must have text associated with it"],
+      minlength: [1, "A thread text must contain at least 1 character"],
+      maxlength: [
+        10000,
+        "A thread text must contain at most 10,000 characters",
+      ],
     },
     delete_password: {
       type: String,
       required: [true, "A thread must have a password to delete it"],
       select: false,
-      minlength: 3,
-      maxlength: 8,
+      minlength: [3, "A password must contain at least 3 characters"],
+      maxlength: [8, "A password must contain at least 3 characters"],
     },
     reported: {
       type: Boolean,

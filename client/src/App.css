@@ -172,6 +172,7 @@ ul {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   grid-template-rows: auto;
+  grid-template-areas: "reply-label textarea-container reply-password-label password-container pw-submit";
 }
 
 .new-reply__text,
@@ -185,25 +186,14 @@ ul {
   justify-self: start;
   align-self: center;
   margin-left: 5px;
-}
-
-@media screen and (max-width: 800px) {
-  .new-reply__form {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto auto;
-  }
-
-  .new-reply__submit {
-    justify-self: end;
-  }
+  grid-area: pw-submit;
 }
 
 .new-reply__input__containers {
   align-self: center;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .new-reply__password__input {
@@ -245,4 +235,51 @@ ul {
 
 .pagination__number {
   margin: auto 2rem;
+}
+
+.new-reply__textarea__container {
+  grid-area: textarea-container;
+}
+
+.new-reply__password__container {
+  grid-area: password-container;
+}
+
+.new-reply__text {
+  grid-area: reply-label;
+}
+
+.new-reply__password {
+  grid-area: reply-password-label;
+}
+
+@media screen and (max-width: 800px) {
+  .new-reply__form {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "reply-label textarea-container" "reply-password-label password-container" ". pw-submit";
+  }
+
+  .new-reply__submit {
+    justify-self: start;
+    margin-left: 0;
+    margin-top: 5px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    margin: 0;
+  }
+
+  .new-reply__input__containers {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+  }
+
+  .new-reply__password__input {
+    align-self: flex-start;
+  }
 }

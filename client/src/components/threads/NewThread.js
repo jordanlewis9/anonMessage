@@ -5,9 +5,33 @@ const NewThread = (props) => {
   const [thread, setThread] = useState("");
   const [name, setName] = useState("");
   const [deletePassword, setDeletePassword] = useState("");
+  const [validThread, setValidThread] = useState({
+    valid: null,
+    message: "",
+  });
+  const [validName, setValidName] = useState({
+    valid: null,
+    message: "",
+  });
+  const [validPassword, setValidPassword] = useState({
+    valid: null,
+    message: "",
+  });
   const handleSubmit = async (e) => {
+    e.preventDefault();
+    setValidThread({
+      valid: null,
+      message: "",
+    });
+    setValidName({
+      valid: null,
+      message: "",
+    });
+    setValidPassword({
+      valid: null,
+      message: "",
+    });
     try {
-      e.preventDefault();
       await axios.post(`/api/threads/${props.board}`, {
         name: name,
         text: thread,
@@ -15,17 +39,26 @@ const NewThread = (props) => {
       });
       document.location.reload(true);
     } catch (err) {
-      console.log(err.message);
+      if (thread.length < 1 || thread.length > 10000) {
+        setValidThread({
+          valid: false,
+          message: "A thread must contain between 1 and 10,000 characters",
+        });
+      }
+      if (name.length < 1 || name.length > 200) {
+        setValidName({
+          valid: false,
+          message: "A title must contain between 1 and 200 characters",
+        });
+      }
+      if (deletePassword.length < 3 || deletePassword.length > 8) {
+        setValidPassword({
+          valid: false,
+          message: "A password must contain between 3 and 8 characters",
+        });
+      }
+      return;
     }
-  };
-  const invalidPassword = (e) => {
-    let message;
-    if (deletePassword.length < 3) {
-      message = `<p>Passwords must be greater than ${deletePassword.length} characters long.`;
-    } else {
-      message = `<p>Passwords must be less than ${deletePassword.length} characters long.`;
-    }
-    e.target.insertAdjacentHTML("afterend", message);
   };
   return (
     <div>
@@ -41,6 +74,7 @@ const NewThread = (props) => {
           className="new-thread__title__text"
           name="title"
         />
+        {validName.valid === false ? <p>{validName.message}</p> : ""}
         <label className="new-thread__text" htmlFor="text">
           Text:
         </label>
@@ -51,6 +85,7 @@ const NewThread = (props) => {
           rows="5"
           name="text"
         ></textarea>
+        {validThread.valid === false ? <p>{validThread.message}</p> : ""}
         <label className="new-thread__password" htmlFor="deletePassword">
           Set Delete Password:
         </label>
@@ -60,10 +95,8 @@ const NewThread = (props) => {
           onChange={(e) => setDeletePassword(e.target.value)}
           className="new-thread__password__text"
           name="deletePassword"
-          minLength="3"
-          maxLength="8"
-          onInvalid={(e) => invalidPassword(e)}
         />
+        {validPassword.valid === false ? <p>{validPassword.message}</p> : ""}
         <input type="submit" value="Submit" className="new-thread__submit" />
       </form>
     </div>
