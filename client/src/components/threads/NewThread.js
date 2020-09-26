@@ -67,36 +67,54 @@ const NewThread = (props) => {
         <label className="new-thread__title" htmlFor="title">
           Title:
         </label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="new-thread__title__text"
-          name="title"
-        />
-        {validName.valid === false ? <p>{validName.message}</p> : ""}
+        <div className="new-thread__title__container">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="new-thread__title__text"
+            name="title"
+          />
+          {validName.valid === false ? (
+            <p className="error">{validName.message}</p>
+          ) : (
+            ""
+          )}
+        </div>
         <label className="new-thread__text" htmlFor="text">
           Text:
         </label>
-        <textarea
-          value={thread}
-          onChange={(e) => setThread(e.target.value)}
-          className="new-thread__text__text"
-          rows="5"
-          name="text"
-        ></textarea>
-        {validThread.valid === false ? <p>{validThread.message}</p> : ""}
+        <div className="new-thread__text__container">
+          <textarea
+            value={thread}
+            onChange={(e) => setThread(e.target.value)}
+            className="new-thread__text__text"
+            rows="5"
+            name="text"
+          ></textarea>
+          {validThread.valid === false ? (
+            <p className="error">{validThread.message}</p>
+          ) : (
+            ""
+          )}
+        </div>
         <label className="new-thread__password" htmlFor="deletePassword">
           Set Delete Password:
         </label>
-        <input
-          type="password"
-          value={deletePassword}
-          onChange={(e) => setDeletePassword(e.target.value)}
-          className="new-thread__password__text"
-          name="deletePassword"
-        />
-        {validPassword.valid === false ? <p>{validPassword.message}</p> : ""}
+        <div className="new-thread__password__container">
+          <input
+            type="password"
+            value={deletePassword}
+            onChange={(e) => setDeletePassword(e.target.value)}
+            className="new-thread__password__text"
+            name="deletePassword"
+          />
+          {validPassword.valid === false ? (
+            <p className="error">{validPassword.message}</p>
+          ) : (
+            ""
+          )}
+        </div>
         <input type="submit" value="Submit" className="new-thread__submit" />
       </form>
     </div>

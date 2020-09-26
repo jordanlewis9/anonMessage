@@ -31,51 +31,19 @@ const NewReply = (props) => {
       });
       document.location.reload(true);
     } catch (err) {
-      if (reply.length < 1 && deletePassword.length < 3) {
-        setValidReply({
-          valid: false,
-          message: "A reply must contain at least 1 character",
-        });
+      if (deletePassword.length < 3 || deletePassword.length > 8) {
         setValidPassword({
           valid: false,
-          message: "A password must contain at least 3 characters",
+          message: "A password must contain between 3 and 8 characters",
         });
-        return;
-      } else if (reply.length < 1 && deletePassword.length > 8) {
-        setValidReply({
-          valid: false,
-          message: "A reply must contain at least 1 character",
-        });
-        setValidPassword({
-          valid: false,
-          message: "A password must contain at most 8 characters",
-        });
-        return;
-      } else if (reply.length > 10000) {
-        setValidReply({
-          valid: false,
-          message: "A reply can only contain up to 10,000 characters",
-        });
-        return;
-      } else if (reply.length < 1) {
-        setValidReply({
-          valid: false,
-          message: "A reply must contain at least 1 character",
-        });
-        return;
-      } else if (deletePassword.length < 3) {
-        setValidPassword({
-          valid: false,
-          message: "A password must contain at least 3 characters",
-        });
-        return;
-      } else if (deletePassword.length > 8) {
-        setValidPassword({
-          valid: false,
-          message: "A password must contain at most 8 characters",
-        });
-        return;
       }
+      if (reply.length < 1 || reply.length > 10000) {
+        setValidReply({
+          valid: false,
+          message: "A reply must contain between 1 and 10,000 characters",
+        });
+      }
+      return;
     }
   };
   return (
@@ -94,7 +62,7 @@ const NewReply = (props) => {
             name="text"
           ></textarea>
           {validReply.valid === false ? (
-            <p className="new-reply__error">{validReply.message}</p>
+            <p className="error">{validReply.message}</p>
           ) : (
             ""
           )}
@@ -113,7 +81,7 @@ const NewReply = (props) => {
             }`}
           />
           {validPassword.valid === false ? (
-            <p className="new-reply__error">{validPassword.message}</p>
+            <p className="error">{validPassword.message}</p>
           ) : (
             ""
           )}
