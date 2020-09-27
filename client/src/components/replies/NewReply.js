@@ -43,6 +43,9 @@ const NewReply = (props) => {
           message: "A reply must contain between 1 and 10,000 characters",
         });
       }
+      if (reply.valid === null && deletePassword.valid === null) {
+        document.location.replace("/error");
+      }
       return;
     }
   };

@@ -57,6 +57,13 @@ const NewThread = (props) => {
           message: "A password must contain between 3 and 8 characters",
         });
       }
+      if (
+        thread.valid === null &&
+        name.valid === null &&
+        deletePassword.valid === null
+      ) {
+        document.location.replace("/error");
+      }
       return;
     }
   };
