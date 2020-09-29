@@ -6,8 +6,13 @@ const Home = () => {
   const [boards, setBoards] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/boards");
-      setBoards(response.data.boards);
+      try {
+        const response = await axios.get("/api/boards");
+        setBoards(response.data.boards);
+      } catch (err) {
+        console.log(err);
+        document.location.replace("/error");
+      }
     };
     fetchData();
   }, []);
