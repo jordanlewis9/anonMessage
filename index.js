@@ -22,6 +22,8 @@ app.use(cors({ origin: "*" })); //For FCC testing purposes only
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+apiRoutes(app);
+
 //Index page (static HTML)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "client/build")));
@@ -35,7 +37,6 @@ app.route("/").get(function (req, res) {
 });
 
 //Routing for API
-apiRoutes(app);
 
 //404 Not Found Middleware
 app.use(function (req, res, next) {
